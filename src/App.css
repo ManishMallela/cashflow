@@ -342,4 +342,172 @@ body {
     gap: 10px;
     align-items: flex-start;
   }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Spending Charts */
+.charts-section {
+  margin-bottom: 28px;
+}
+
+.charts-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.chart-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.chart-tooltip {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.chart-tooltip-label {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.chart-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.stat-item.savings { color: var(--green); }
+.stat-item.expenses { color: var(--red); }
+
+.chart-legend-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  flex: 1;
+}
+
+.legend-pct {
+  color: var(--text-muted);
+  min-width: 40px;
+  text-align: right;
+}
+
+.legend-amt {
+  font-weight: 600;
+  min-width: 70px;
+  text-align: right;
+}
+
+/* Recharts overrides */
+.recharts-legend-item-text {
+  color: var(--text) !important;
+  font-size: 0.8rem;
+}
+
+.recharts-text {
+  fill: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+/* Financial Health Badge */
+.health-badge {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.health-badge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.health-badge-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.health-badge-pct {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.health-badge-msg {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.health-progress-bar {
+  margin-top: 4px;
+}
+
+.health-progress-track {
+  display: flex;
+  gap: 3px;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.health-progress-segment {
+  flex: 1;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.health-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
 }

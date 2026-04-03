@@ -3,6 +3,7 @@ import './App.css'
 import TransactionForm from './components/TransactionForm'
 import TransactionList from './components/TransactionList'
 import Summary from './components/Summary'
+import SpendingCharts from './components/SpendingCharts'
 
 const STORAGE_KEY = 'cashflow_transactions'
 
@@ -55,6 +56,8 @@ function App() {
       </header>
 
       <Summary balance={balance} income={income} expenses={expenses} />
+
+      <SpendingCharts transactions={transactions} />
 
       <TransactionForm onAdd={addTransaction} />
 
