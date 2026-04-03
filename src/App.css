@@ -296,6 +296,17 @@ body {
   margin-top: 2px;
 }
 
+.tx-frequency {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background: var(--green-bg);
+  color: var(--green);
+}
+
 .tx-amount {
   font-weight: 700;
   font-size: 1.05rem;

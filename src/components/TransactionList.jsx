@@ -30,7 +30,12 @@ function TransactionList({ transactions, onDelete }) {
           </div>
           <div className="tx-details">
             <div className="tx-description">{t.description}</div>
-            <div className="tx-category">{t.category}</div>
+            <div className="tx-category">
+              {t.category}
+              {t.frequency && t.frequency !== 'One-time' && (
+                <span className="tx-frequency">{t.frequency}</span>
+              )}
+            </div>
           </div>
           <div className={`tx-amount ${t.type}`}>
             {t.type === 'income' ? '+' : '-'}
