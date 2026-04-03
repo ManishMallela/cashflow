@@ -5,15 +5,19 @@ const CATEGORIES = {
   expense: ['Food', 'Transport', 'Housing', 'Entertainment', 'Shopping', 'Bills', 'Health', 'Other'],
 }
 
+const FREQUENCIES = ['One-time', 'Daily', 'Weekly', 'Monthly', 'Yearly']
+
 function TransactionForm({ onAdd }) {
   const [type, setType] = useState('expense')
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState(CATEGORIES.expense[0])
+  const [frequency, setFrequency] = useState(FREQUENCIES[0])
 
   const handleTypeChange = (newType) => {
     setType(newType)
     setCategory(CATEGORIES[newType][0])
+    setFrequency(FREQUENCIES[0])
   }
 
   const handleSubmit = (e) => {
@@ -21,16 +25,23 @@ function TransactionForm({ onAdd }) {
     const parsedAmount = parseFloat(amount)
     if (!description.trim() || isNaN(parsedAmount) || parsedAmount <= 0) return
 
-    onAdd({
+    const transaction = {
       type,
       description: description.trim(),
       amount: parsedAmount,
       category,
-    })
+    }
+
+    if (type === 'income') {
+      transaction.frequency = frequency
+    }
+
+    onAdd(transaction)
 
     setDescription('')
     setAmount('')
     setCategory(CATEGORIES[type][0])
+    setFrequency(FREQUENCIES[0])
   }
 
   const isValid = description.trim() && amount && parseFloat(amount) > 0
@@ -75,13 +86,30 @@ function TransactionForm({ onAdd }) {
       </div>
 
       <div className="form-row">
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          aria-label="Category"
+        >
           {CATEGORIES[type].map((cat) => (
             <option key={cat} value={cat}>
               {cat}
             </option>
           ))}
         </select>
+        {type === 'income' && (
+          <select
+            value={frequency}
+            onChange={(e) => setFrequency(e.target.value)}
+            aria-label="Frequency"
+          >
+            {FREQUENCIES.map((freq) => (
+              <option key={freq} value={freq}>
+                {freq}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       <button type="submit" className="btn-add" disabled={!isValid}>

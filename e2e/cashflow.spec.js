@@ -17,7 +17,7 @@ test.describe('Add Income', () => {
     await page.getByPlaceholder('Amount').fill('3000')
 
     // Select a category
-    await page.getByRole('combobox').selectOption('Salary')
+    await page.getByLabel('Category').selectOption('Salary')
 
     // Submit the form
     await page.getByRole('button', { name: 'Add Income' }).click()
@@ -61,6 +61,47 @@ test.describe('Add Income', () => {
     // Submit button should be disabled
     await expect(page.getByRole('button', { name: 'Add Income' })).toBeDisabled()
   })
+
+  test('should add income with a frequency and display it', async ({ page }) => {
+    await page.getByRole('button', { name: '↑ Income' }).click()
+    await page.getByPlaceholder('Description').fill('Weekly Freelance')
+    await page.getByPlaceholder('Amount').fill('500')
+    await page.getByLabel('Category').selectOption('Freelance')
+    await page.getByLabel('Frequency').selectOption('Weekly')
+
+    await page.getByRole('button', { name: 'Add Income' }).click()
+
+    // The transaction should appear with the frequency badge
+    await expect(page.getByText('Weekly Freelance')).toBeVisible()
+    await expect(page.locator('.tx-frequency').filter({ hasText: 'Weekly' })).toBeVisible()
+  })
+
+  test('should not display frequency badge for one-time income', async ({ page }) => {
+    await page.getByRole('button', { name: '↑ Income' }).click()
+    await page.getByPlaceholder('Description').fill('Gift Money')
+    await page.getByPlaceholder('Amount').fill('100')
+    await page.getByLabel('Category').selectOption('Gift')
+    // Frequency defaults to "One-time", so no badge should show
+
+    await page.getByRole('button', { name: 'Add Income' }).click()
+
+    const txRow = page.locator('.transaction-item').filter({ hasText: 'Gift Money' })
+    await expect(txRow).toBeVisible()
+    await expect(txRow.locator('.tx-frequency')).not.toBeVisible()
+  })
+
+  test('should show frequency dropdown only for income type', async ({ page }) => {
+    // Expense mode by default – no frequency dropdown
+    await expect(page.getByLabel('Frequency')).not.toBeVisible()
+
+    // Switch to income – frequency dropdown should appear
+    await page.getByRole('button', { name: '↑ Income' }).click()
+    await expect(page.getByLabel('Frequency')).toBeVisible()
+
+    // Switch back to expense – frequency dropdown should disappear
+    await page.getByRole('button', { name: '↓ Expense' }).click()
+    await expect(page.getByLabel('Frequency')).not.toBeVisible()
+  })
 })
 
 test.describe('Add Expense', () => {
@@ -70,7 +111,7 @@ test.describe('Add Expense', () => {
     await page.getByPlaceholder('Amount').fill('150')
 
     // Select a category
-    await page.getByRole('combobox').selectOption('Food')
+    await page.getByLabel('Category').selectOption('Food')
 
     // Submit the form
     await page.getByRole('button', { name: 'Add Expense' }).click()
