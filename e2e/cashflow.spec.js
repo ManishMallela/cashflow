@@ -85,8 +85,9 @@ test.describe('Add Income', () => {
 
     await page.getByRole('button', { name: 'Add Income' }).click()
 
-    await expect(page.getByText('Gift Money')).toBeVisible()
-    await expect(page.locator('.tx-frequency')).not.toBeVisible()
+    const txRow = page.locator('.transaction-item').filter({ hasText: 'Gift Money' })
+    await expect(txRow).toBeVisible()
+    await expect(txRow.locator('.tx-frequency')).not.toBeVisible()
   })
 
   test('should show frequency dropdown only for income type', async ({ page }) => {
